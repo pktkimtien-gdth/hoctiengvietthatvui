@@ -1,0 +1,129 @@
+{
+  "entities": {
+    "Resource": {
+      "title": "Học liệu và tài liệu ôn tập",
+      "description": "Lưu trữ thông tin các slide bài giảng, file Canva, liên kết Wordwall, PDF ôn tập tiếng Việt tiểu học",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "grade": { "type": "string", "enum": ["1", "2", "3", "4", "5"] },
+        "topic": { "type": "string" },
+        "keywords": { "type": "array" },
+        "type": { "type": "string", "enum": ["canva", "wordwall", "google_slides", "google_drive", "youtube", "other"] },
+        "thumbnailUrl": { "type": "string" },
+        "link": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "creator": { "type": "string" },
+        "isFavorite": { "type": "boolean" }
+      },
+      "required": ["id", "title", "grade", "topic", "type", "link"]
+    },
+    "VideoLesson": {
+      "title": "Bài giảng video YouTube",
+      "description": "Lưu trữ thông tin video bài giảng, thời lượng học và phân phối môn học",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "grade": { "type": "string", "enum": ["1", "2", "3", "4", "5"] },
+        "duration": { "type": "string" },
+        "youtubeId": { "type": "string" },
+        "topic": { "type": "string" },
+        "isFavorite": { "type": "boolean" },
+        "isCompleted": { "type": "boolean" }
+      },
+      "required": ["id", "title", "grade", "youtubeId"]
+    },
+    "GameItem": {
+      "title": "Trò chơi học tập tương tác",
+      "description": "Lưu trữ cấu hình các game ghép chữ, điền từ, vòng quay may mắn hay trắc nghiệm ôn tập",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "grade": { "type": "string", "enum": ["1", "2", "3", "4", "5"] },
+        "topic": { "type": "string" },
+        "gameType": { "type": "string", "enum": ["ghep_chu", "dien_tu", "vong_quay", "trac_nghiem"] },
+        "difficulty": { "type": "string", "enum": ["Dễ", "Trung bình", "Khó"] }
+      },
+      "required": ["id", "title", "grade", "gameType", "difficulty"]
+    },
+    "Quiz": {
+      "title": "Bài kiểm tra đánh giá chất lượng",
+      "description": "Lưu trữ bộ câu hỏi, thời gian thi, và nội dung đánh giá Tiếng Việt",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "grade": { "type": "string", "enum": ["1", "2", "3", "4", "5"] },
+        "topic": { "type": "string" },
+        "durationMinutes": { "type": "integer" },
+        "questions": { "type": "array" }
+      },
+      "required": ["id", "title", "grade", "durationMinutes", "questions"]
+    },
+    "StudentStats": {
+      "title": "Thống kê học tập",
+      "description": "Chỉ số hoàn thành, thời gian học tập và huy hiệu tích lũy",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "videosWatched": { "type": "integer" },
+        "gamesPlayed": { "type": "integer" },
+        "quizzesCompleted": { "type": "integer" },
+        "totalQuizScore": { "type": "integer" },
+        "learningTimeMinutes": { "type": "integer" },
+        "completedResourceIds": { "type": "array" },
+        "badges": { "type": "array" }
+      },
+      "required": ["userId", "videosWatched", "gamesPlayed", "quizzesCompleted"]
+    },
+    "QuizHistory": {
+      "title": "Lịch sử thi và đánh giá",
+      "description": "Lịch sử chi tiết kết quả làm bài tập trắc nghiệm của học sinh",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "quizId": { "type": "string" },
+        "quizTitle": { "type": "string" },
+        "grade": { "type": "string" },
+        "score": { "type": "integer" },
+        "totalQuestions": { "type": "integer" },
+        "date": { "type": "string" },
+        "timeSpentSeconds": { "type": "integer" }
+      },
+      "required": ["id", "quizId", "score", "totalQuestions", "date"]
+    }
+  },
+  "firestore": {
+    "/resources/{resourceId}": {
+      "schema": "Resource",
+      "description": "Tập hợp tất cả các tài nguyên và tài liệu học tập"
+    },
+    "/videos/{videoId}": {
+      "schema": "VideoLesson",
+      "description": "Tập hợp các video bài giảng"
+    },
+    "/games/{gameId}": {
+      "schema": "GameItem",
+      "description": "Các mini game rèn luyện trí tuệ"
+    },
+    "/quizzes/{quizId}": {
+      "schema": "Quiz",
+      "description": "Các bài kiểm tra định kỳ cho học sinh"
+    },
+    "/stats/{userId}": {
+      "schema": "StudentStats",
+      "description": "Thống kê quá trình tự học của học sinh"
+    },
+    "/quizHistory/{historyId}": {
+      "schema": "QuizHistory",
+      "description": "Kết quả các bài làm đã nộp"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Kho Học Liệu Tiếng Việt Tiểu Học",
+  "description": "Hệ thống kho học liệu số môn Tiếng Việt dành cho học sinh tiểu học, hỗ trợ học sinh, giáo viên và phụ huynh học tập, quản lý tài nguyên và luyện tập tương tác.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
